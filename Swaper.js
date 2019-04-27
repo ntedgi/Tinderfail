@@ -1,7 +1,9 @@
 import React from "react";
-import ScoreTable from "./ScoreTable";
+import { getCurrentQuestionsAnswers, addUserAnswers } from "./services/DatabaseHandler";
+import AppConfig from './AppConfig';
 
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Dimensions } from "react-native";
+import { Button } from "react-native-elements";
+import { StyleSheet, View, TouchableOpacity, Animated, Dimensions } from "react-native";
 import Image from "react-native-remote-svg";
 import checkIcon from "./assets/checked.svg";
 import cancelIcon from "./assets/cancel.svg";
@@ -29,26 +31,29 @@ import EmptyState from "./EmptyState";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-const getCards = () => {
-  const cards = [
-    { id: "1", image: img1, isActive: true },
-    { id: "2", image: img2, isActive: false },
-    { id: "3", image: img3, isActive: false },
-    { id: "4", image: img4, isActive: false },
-    { id: "5", image: img5, isActive: false },
-    { id: "7", image: img7, isActive: false },
-    { id: "8", image: img8, isActive: false },
-    { id: "9", image: img9, isActive: false },
-    { id: "10", image: img10, isActive: false },
-    { id: "11", image: img11, isActive: true },
-    { id: "12", image: img12, isActive: false },
-    { id: "13", image: img13, isActive: false },
-    { id: "14", image: img14, isActive: false },
-    { id: "15", image: img15, isActive: false },
-    { id: "16", image: img16, isActive: true },
-    { id: "17", image: img17, isActive: false },
-    { id: "18", image: img18, isActive: false }
-  ];
+const getCards = async () => {
+  let cards = [];
+  if (!cards || typeof(cards) != []) {
+    cards = [
+      { id: "1", image: img1, isActive: true, isLiked: false },
+      { id: "2", image: img2, isActive: false, isLiked: false },
+      { id: "3", image: img3, isActive: false, isLiked: false },
+      { id: "4", image: img4, isActive: false, isLiked: false },
+      { id: "5", image: img5, isActive: false, isLiked: false },
+      { id: "7", image: img7, isActive: false, isLiked: false },
+      { id: "8", image: img8, isActive: false, isLiked: false },
+      { id: "9", image: img9, isActive: false, isLiked: false },
+      { id: "10", image: img10, isActive: false, isLiked: false },
+      { id: "11", image: img11, isActive: true, isLiked: false },
+      { id: "12", image: img12, isActive: false, isLiked: false },
+      { id: "13", image: img13, isActive: false, isLiked: false },
+      { id: "14", image: img14, isActive: false, isLiked: false },
+      { id: "15", image: img15, isActive: false, isLiked: false },
+      { id: "16", image: img16, isActive: true, isLiked: false },
+      { id: "17", image: img17, isActive: false, isLiked: false },
+      { id: "18", image: img18, isActive: false, isLiked: false }
+    ]
+  }
   let lastItemPosition = false;
   cards.forEach((card, i) => {
     const position = new Animated.ValueXY();
@@ -65,14 +70,18 @@ export default class Swaper extends React.Component {
     headerStyle: {
       height: 44
     }
-  }
+  };
 
   constructor() {
     super();
+    this.state = {
+      isLoading: true,
+      cards: []
+    };
+  }
 
-    const cards = getCards();
-
-    this.state = { cards };
+  async componentDidMount() {
+    await this.reloadCards();
   }
 
   onCardSwiped = id => {
@@ -82,7 +91,8 @@ export default class Swaper extends React.Component {
       const nextIndex = swipedIndex + 1;
       const newState = { ...prevState };
       newState.cards[swipedIndex]["isActive"] = false;
-      if (isLastIndex) return prevState;
+      newState.isLastIndex = isLastIndex;
+      if (isLastIndex) return newState;
       newState.cards[nextIndex]["isActive"] = true;
       return newState;
     });
@@ -105,15 +115,13 @@ export default class Swaper extends React.Component {
     if (!position) {
       position = this.state.cards[activeIndex].position;
     }
+    this.state.cards[activeIndex].isLiked = true;
     Animated.spring(position, {
       toValue: { x: -SCREEN_WIDTH - 100, y: dy }
     }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
   };
 
   renderCards = cards => {
-    if (this.isEmptyState()) {
-      return <ScoreTable />;
-    }
     return cards
       .map((card, index) => {
         return (
@@ -128,9 +136,45 @@ export default class Swaper extends React.Component {
       .reverse();
   };
 
-  reloadCards = () => {
-    const cards = getCards();
-    this.setState({ cards });
+  reloadCards = async () => {
+    console.log(`Getting Cards`);
+    const cards = await getCards();
+    this.setState({ cards, isLoading: false });
+  };
+
+  async _submitAnswersPressed() {
+    console.log(`Submiting answers`);
+    const answers = this.state.cards.map(card => {
+      const { id, isLiked } = card;
+      return { id, isLiked };
+    });
+    const response = await addUserAnswers(AppConfig.loggedUID, answers);
+    console.log('Answers sent');
+    this.props.navigation.navigate("Home");
+  }
+
+  renderEmptyState = () => {
+    return (
+      <View style={{ height: "100%", width: "100%", display: "flex", flexDirection: 'column', justifyContent: 'center',}}>
+        <Button
+          title='Send Answers'
+          activeOpacity={1}
+          underlayColor='transparent'
+          onPress={this._submitAnswersPressed.bind(this)}
+          loadingProps={{ size: "small", color: "white" }}
+          buttonStyle={{
+            height: 50,
+            width: 250,
+            backgroundColor: "gray",
+            borderWidth: 2,
+            borderColor: "white",
+            borderRadius: 30
+          }}
+          containerStyle={{ marginVertical: 10, alignItems: 'center' }}
+          titleStyle={{ fontWeight: "bold", color: "white" }}
+        />
+      </View>
+    );
   };
 
   isEmptyState = () => {
@@ -141,8 +185,9 @@ export default class Swaper extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.cardArea}>{this.renderCards(this.state.cards)}</View>
-
-        {!this.isEmptyState() && (
+        {this.isLoading ? null : this.state.isLastIndex ? (
+          this.renderEmptyState()
+        ) : (
           <View style={styles.btnContainer}>
             <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()}>
               <Image source={checkIcon} style={styles.btnIcon} />
