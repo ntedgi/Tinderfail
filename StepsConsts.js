@@ -1,5 +1,5 @@
-const SIGNUP = "SIGNUP";
+const HOME = "HOME";
 const SWAPPER = "SWAPPER";
 const TABLE = "TABLE";
 
-export { SIGNUP, SWAPPER, TABLE };
+export { HOME, SWAPPER, TABLE };

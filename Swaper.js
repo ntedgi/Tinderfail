@@ -18,6 +18,19 @@ import img2 from "./assets/image2.jpeg";
 import img3 from "./assets/image3.jpeg";
 import img4 from "./assets/image4.jpeg";
 import img5 from "./assets/image5.jpeg";
+import img7 from "./assets/image7.jpeg";
+import img8 from "./assets/image8.jpeg";
+import img9 from "./assets/image9.jpeg";
+import img10 from "./assets/image10.jpeg";
+import img11 from "./assets/image11.jpeg";
+import img12 from "./assets/image12.jpeg";
+import img13 from "./assets/image13.jpeg";
+import img14 from "./assets/image14.jpeg";
+import img15 from "./assets/image15.jpeg";
+import img16 from "./assets/image16.jpeg";
+import img17 from "./assets/image17.jpeg";
+import img18 from "./assets/image18.jpeg";
+
 import EmptyState from "./EmptyState";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -29,7 +42,19 @@ const getCards = () => {
     { id: "2", image: img2, isActive: false },
     { id: "3", image: img3, isActive: false },
     { id: "4", image: img4, isActive: false },
-    { id: "5", image: img5, isActive: false }
+    { id: "5", image: img5, isActive: false },
+    { id: "7", image: img7, isActive: false },
+    { id: "8", image: img8, isActive: false },
+    { id: "9", image: img9, isActive: false },
+    { id: "10", image: img10, isActive: false },
+    { id: "11", image: img11, isActive: true },
+    { id: "12", image: img12, isActive: false },
+    { id: "13", image: img13, isActive: false },
+    { id: "14", image: img14, isActive: false },
+    { id: "15", image: img15, isActive: false },
+    { id: "16", image: img16, isActive: true },
+    { id: "17", image: img17, isActive: false },
+    { id: "18", image: img18, isActive: false }
   ];
   let lastItemPosition = false;
   cards.forEach((card, i) => {

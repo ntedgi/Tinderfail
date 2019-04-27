@@ -1,31 +1,34 @@
 import React from "react";
-import Swaper from "./Swaper";
 import Home from "./Home";
 
-import { SIGNUP, SWAPPER, TABLE } from "./StepsConsts";
+import { HOME, SWAPPER, TABLE } from "./StepsConsts";
 import ScoreTable from "./ScoreTable";
+import Swaper from "./Swaper";
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: SWAPPER
+      step: HOME
     };
   }
-  getNextStep = currentStep => {
-    if (currentStep === SIGNUP) return SWAPPER;
-    if (currentStep === SWAPPER) return TABLE;
-    return TABLE;
-  };
-  onStepFinish = () => {
-    let nextStep = this.getNextStep(this.state.step);
-    this.setState({ step: nextStep });
-  };
 
+  moveToQuestions = () => {
+    this.setState({ step: TABLE });
+  };
+  moveToScrore = () => {
+    this.setState({ step: SWAPPER });
+  };
   render() {
-    // if(this.state.step===SWAPPER) return <Swaper onStepFinish={this.onStepFinish}/>
-    // return <Home />;
-    return <ScoreTable />;
-
+    const { step } = this.state;
+    if (step === HOME)
+      return (
+        <Home
+          moveToQuestions={this.moveToQuestions}
+          moveToScrore={this.moveToScrore}
+        />
+      );
+    if (step === SWAPPER) return <Swaper />;
+    else return <ScoreTable />;
   }
 }
