@@ -20,8 +20,11 @@
   },
   "dependencies": {
     "expo": "^27.0.1",
+    "mockjs": "^1.0.1-beta3",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-remote-svg": "^1.2.0",
+    "react-native-simple-table": "0.0.3",
+    "react-table": "^6.10.0"
   }
 }
