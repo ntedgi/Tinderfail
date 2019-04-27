@@ -1,14 +1,7 @@
 import React from "react";
 import ScoreTable from "./ScoreTable";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Animated,
-  Dimensions
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Dimensions } from "react-native";
 import Image from "react-native-remote-svg";
 import checkIcon from "./assets/checked.svg";
 import cancelIcon from "./assets/cancel.svg";
@@ -67,6 +60,13 @@ const getCards = () => {
 };
 
 export default class Swaper extends React.Component {
+  static navigationOptions = {
+    headerTransparent: true,
+    headerStyle: {
+      height: 44
+    }
+  }
+
   constructor() {
     super();
 
@@ -112,7 +112,7 @@ export default class Swaper extends React.Component {
 
   renderCards = cards => {
     if (this.isEmptyState()) {
-      return <ScoreTable  />;
+      return <ScoreTable />;
     }
     return cards
       .map((card, index) => {
@@ -140,22 +140,14 @@ export default class Swaper extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.cardArea}>
-          {this.renderCards(this.state.cards)}
-        </View>
+        <View style={styles.cardArea}>{this.renderCards(this.state.cards)}</View>
 
         {!this.isEmptyState() && (
           <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => this.handleLikeSelect()}
-            >
+            <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()}>
               <Image source={checkIcon} style={styles.btnIcon} />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => this.handleNopeSelect()}
-            >
+            <TouchableOpacity style={styles.btn} onPress={() => this.handleNopeSelect()}>
               <Image source={cancelIcon} style={styles.btnIcon} />
             </TouchableOpacity>
           </View>
@@ -167,6 +159,7 @@ export default class Swaper extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 24,
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",

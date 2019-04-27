@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import Image from "react-native-remote-svg";
 import background from "./assets/home.png";
 import header from "./assets/homeHeader.svg";
@@ -15,22 +9,24 @@ import header3 from "./assets/subheader3.svg";
 import header4 from "./assets/whatdead.svg";
 
 export default class home extends React.Component {
-  render() {
+  static navigationOptions = {
+    title: null,
+    header: null
+  };
 
+  render() {
+    const { navigate } = this.props.navigation;
     return (
-      <ImageBackground
-        source={background}
-        style={{ width: "100%", height: "100%" }}
-      >
+      <ImageBackground source={background} style={{ width: "100%", height: "100%" }}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Image source={header} style={styles.header} />
           </View>
-          <View style={styles.btnContainer} >
-            <TouchableOpacity onPress={() => this.props.moveToScrore()}>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity onPress={() => navigate("Swapper")}>
               <Text style={styles.btn}>Guess The Throne</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.moveToQuestions()}>
+            <TouchableOpacity onPress={() => navigate("Score")}>
               <Text style={styles.btn}>See The Deads</Text>
             </TouchableOpacity>
           </View>
@@ -64,9 +60,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5
   },
   btnContainer: {
-    marginTop:300,
-    top:0,
-    bottom:0
+    marginTop: 300,
+    top: 0,
+    bottom: 0
   },
   btn: {
     width: 300,

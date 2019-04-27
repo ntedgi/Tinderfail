@@ -48,6 +48,7 @@ class TableComponent extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 24,
     ...Platform.select({
       ios: {
         alignItems: "center"
