@@ -1,5 +1,7 @@
 import React from "react";
 import Swaper from "./Swaper";
+import Home from "./Home";
+
 import { SIGNUP, SWAPPER, TABLE } from "./StepsConsts";
 import ScoreTable from "./ScoreTable";
 
@@ -22,6 +24,8 @@ export default class App extends React.Component {
 
   render() {
     // if(this.state.step===SWAPPER) return <Swaper onStepFinish={this.onStepFinish}/>
-    return <Swaper />;
+    // return <Home />;
+    return <ScoreTable />;
+
   }
 }

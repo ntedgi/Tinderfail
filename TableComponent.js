@@ -3,12 +3,13 @@ import {
   Image as RNImage,
   Platform,
   StyleSheet,
-  View,
-  Text
+  View,ImageBackground
 } from "react-native";
-import Table from "react-native-simple-table";
+import Table from "./Table";
 import DataFactory from "./DataFactory";
 import title from "./assets/kings.png";
+import backgroundImage from "./assets/back.jpg";
+
 
 const columns = [
   {
@@ -26,7 +27,10 @@ class TableComponent extends Component {
   render() {
     let dataSource = DataFactory.generate().data;
     return (
-
+      <ImageBackground
+      source={backgroundImage}
+      style={{ width: "100%", height: "100%" }}
+    >
       <View style={styles.container}>
         <RNImage style={styles.cardImg} source={title} />
         <Table
@@ -36,6 +40,8 @@ class TableComponent extends Component {
           dataSource={dataSource}
         />
       </View>
+      </ImageBackground>
+
     );
   }
 }
