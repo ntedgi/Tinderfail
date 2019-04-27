@@ -19,8 +19,6 @@ var dbConfig = {
     storageBucket: "bucket.appspot.com"
   };
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+const database = firebase;
 
-export default {
-    database
-};
+export default database;

@@ -39,7 +39,7 @@ export default class home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 60,
+    marginTop: 64,
     flexDirection: "column",
     alignItems: "center"
   },
