@@ -1,4 +1,6 @@
 import React from "react";
+import ScoreTable from "./ScoreTable";
+
 import {
   StyleSheet,
   Text,
@@ -84,9 +86,9 @@ export default class Swaper extends React.Component {
   };
 
   renderCards = cards => {
-    if (this.isEmptyState())
-      return <EmptyState reloadCards={this.reloadCards} />;
-
+    if (this.isEmptyState()) {
+      return <ScoreTable  />;
+    }
     return cards
       .map((card, index) => {
         return (
@@ -116,20 +118,23 @@ export default class Swaper extends React.Component {
         <View style={styles.cardArea}>
           {this.renderCards(this.state.cards)}
         </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => this.handleLikeSelect()}
-          >
-            <Image source={checkIcon} style={styles.btnIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => this.handleNopeSelect()}
-          >
-            <Image source={cancelIcon} style={styles.btnIcon} />
-          </TouchableOpacity>
-        </View>
+
+        {!this.isEmptyState() && (
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.handleLikeSelect()}
+            >
+              <Image source={checkIcon} style={styles.btnIcon} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.handleNopeSelect()}
+            >
+              <Image source={cancelIcon} style={styles.btnIcon} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   }
