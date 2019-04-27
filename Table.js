@@ -113,18 +113,18 @@ const styles = StyleSheet.create({
   dataViewContent: {},
   row: {
     flexDirection: "row",
-    backgroundColor: "rgba(230, 230, 220, 0.3)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     borderBottomWidth: 2,
     borderBottomColor: "#dfdfdf"
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 22,
     alignItems: "center",
     justifyContent: "center"
   },
   cellText: {
     fontSize: 16,
-    color: "black",
+    color: "white",
     alignItems: "center",
     justifyContent: "center"
   },
