@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ImageBackground, Dimensions } from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
-import { createUser, loginUser } from './services/DatabaseHandler';
+import { createUser, loginUser } from "./services/DatabaseHandler";
+import AppConfig from './AppConfig';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -36,26 +37,24 @@ export default class LoginScreen1 extends Component {
   }
 
   async submitLoginCredentials() {
-    const { showLoading } = this.state;
-
     this.setState({
       showLoading: true
     });
 
     const { email, password } = this.state;
     const response = await loginUser(email, password);
+    const { uid } = response.user;
+    AppConfig.loggedUID = uid;
     console.log(response);
+    this.props.navigation.navigate("Home");
     this.setState({
       showLoading: false
     });
-
-    const { navigate } = this.props.navigation;
-    navigate("Home");
   }
 
   async _createAccountPressed() {
     const response = await createUser(this.state.email, this.state.password);
-    console.log(`createAccount - response: ${JSON.stringify(response)}`)
+    console.log(`createAccount - response: ${JSON.stringify(response)}`);
   }
 
   render() {
