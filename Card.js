@@ -81,7 +81,7 @@ export default class App extends React.Component {
             { opacity: this.likeOpacity }
           ]}
         >
-          <Text style={[styles.cardText, styles.cardTextLike]} >LIKE</Text>
+          <Text style={[styles.cardText, styles.cardTextLike]} >ALIVE</Text>
         </Animated.View>
         <Animated.View 
           style={[
@@ -90,7 +90,7 @@ export default class App extends React.Component {
             { opacity: this.nopeOpacity }
           ]}
         >
-          <Text style={[styles.cardText, styles.cardTextNope]} >NOPE</Text>
+          <Text style={[styles.cardText, styles.cardTextNope]} >DEAD</Text>
         </Animated.View>
   
         <RNImage style={styles.cardImg} source={this.props.image} />

@@ -1,5 +1,7 @@
 import Swaper from './Swaper';
+import ScoreTable from './ScoreTable'
 import React from 'react';
+
 import { SIGNUP,SWAPPER,TABLE} from "./StepsConsts"
 
 
@@ -7,7 +9,7 @@ export default class App extends React.Component {
     constructor() {
       super()    
       this.state = {
-            step : SIGNUP,
+            step : TABLE,
             stepId : 0
       };
     }
@@ -24,6 +26,6 @@ export default class App extends React.Component {
 
     render(){
         if(this.state.step===SIGNUP) return <Swaper onStepFinish={this.onStepFinish}/>    
-        return <div>"ff"</div>    
+        return <ScoreTable/> 
     }   
 }
