@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ImageBackground, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Dimensions
+} from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
 import { createUser, loginUser } from "./services/DatabaseHandler";
-import AppConfig from './AppConfig';
+import AppConfig from "./AppConfig";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -54,9 +60,9 @@ export default class SubmitAnswers extends Component {
 
   async _createAccountPressed() {
     const response = await createUser(this.state.email, this.state.password);
+    const { selectedResult } = this.props;
     console.log(`createAccount - response: ${JSON.stringify(response)}`);
-    if(response!=="ERROR")
-        this.props.navigation.navigate("Score");
+    if (response !== "ERROR") this.props.navigation.navigate("Score");
   }
 
   render() {
@@ -78,22 +84,24 @@ export default class SubmitAnswers extends Component {
                   onChangeText={email => this.setState({ email })}
                   value={email}
                   inputStyle={{ marginLeft: 10, color: "white" }}
-                  keyboardAppearance='light'
-                  placeholder='Email'
+                  keyboardAppearance="light"
+                  placeholder="Email"
                   autoFocus={false}
-                  autoCapitalize='none'
+                  autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType='email-address'
-                  returnKeyType='next'
+                  keyboardType="email-address"
+                  returnKeyType="next"
                   ref={input => (this.emailInput = input)}
                   onSubmitEditing={() => {
                     this.setState({ email_valid: this.validateEmail(email) });
                     this.passwordInput.focus();
                   }}
                   blurOnSubmit={false}
-                  placeholderTextColor='white'
+                  placeholderTextColor="white"
                   errorStyle={{ textAlign: "center", fontSize: 12 }}
-                  errorMessage={email_valid ? null : "Please enter a valid email address"}
+                  errorMessage={
+                    email_valid ? null : "Please enter a valid email address"
+                  }
                 />
                 <Input
                   containerStyle={{ marginVertical: 10 }}
@@ -101,21 +109,21 @@ export default class SubmitAnswers extends Component {
                   value={password}
                   inputStyle={{ marginLeft: 10, color: "white" }}
                   secureTextEntry={false}
-                  keyboardAppearance='light'
-                  placeholder='User Name'
-                  autoCapitalize='none'
+                  keyboardAppearance="light"
+                  placeholder="User Name"
+                  autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType='default'
-                  returnKeyType='done'
+                  keyboardType="default"
+                  returnKeyType="done"
                   ref={input => (this.passwordInput = input)}
                   blurOnSubmit={true}
-                  placeholderTextColor='white'
+                  placeholderTextColor="white"
                 />
               </View>
               <Button
-                title='Submit Your Answer'
+                title="Submit Your Answer"
                 activeOpacity={1}
-                underlayColor='transparent'
+                underlayColor="transparent"
                 onPress={this._createAccountPressed.bind(this)}
                 loading={showLoading}
                 loadingProps={{ size: "small", color: "white" }}
@@ -131,7 +139,6 @@ export default class SubmitAnswers extends Component {
                 containerStyle={{ marginVertical: 10 }}
                 titleStyle={{ fontWeight: "bold", color: "white" }}
               />
-
             </View>
           ) : (
             <Text>Loading...</Text>

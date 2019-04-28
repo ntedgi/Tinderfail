@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  getCurrentQuestionsAnswers,
-  addUserAnswers
-} from "./services/DatabaseHandler";
+import { addUserAnswers } from "./services/DatabaseHandler";
 import AppConfig from "./AppConfig";
 
 import SubmitAnswers from "./SubmitAnswers";
-import { Button } from "react-native-elements";
 
 import {
   StyleSheet,
@@ -165,6 +161,10 @@ export default class Swaper extends React.Component {
   }
 
   renderEmptyState = () => {
+    const selectedResult = this.state.cards.map(v => {
+      return { id: v.id, alive: v.isLiked };
+    });
+    console.log(selectedResult)
     return (
       <View
         style={{
@@ -175,7 +175,7 @@ export default class Swaper extends React.Component {
           justifyContent: "center"
         }}
       >
-        <SubmitAnswers navigation={ this.props.navigation }/>
+        <SubmitAnswers navigation={this.props.navigation} selectedResult={selectedResult} />
       </View>
     );
   };
