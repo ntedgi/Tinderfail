@@ -3,11 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity, ImageBackground } from "react
 import Image from "react-native-remote-svg";
 import background from "./assets/home.png";
 import header from "./assets/homeHeader.svg";
-import header1 from "./assets/subheader.svg";
-import header2 from "./assets/subheader2.svg";
-import header3 from "./assets/subheader3.svg";
-import header4 from "./assets/whatdead.svg";
-
 export default class home extends React.Component {
   static navigationOptions = {
     title: null,

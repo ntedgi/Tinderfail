@@ -1,9 +1,20 @@
 import React from "react";
-import { getCurrentQuestionsAnswers, addUserAnswers } from "./services/DatabaseHandler";
-import AppConfig from './AppConfig';
+import {
+  getCurrentQuestionsAnswers,
+  addUserAnswers
+} from "./services/DatabaseHandler";
+import AppConfig from "./AppConfig";
 
+import SubmitAnswers from "./SubmitAnswers";
 import { Button } from "react-native-elements";
-import { StyleSheet, View, TouchableOpacity, Animated, Dimensions } from "react-native";
+
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Animated,
+  Dimensions
+} from "react-native";
 import Image from "react-native-remote-svg";
 import checkIcon from "./assets/checked.svg";
 import cancelIcon from "./assets/cancel.svg";
@@ -33,7 +44,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const getCards = async () => {
   let cards = [];
-  if (!cards || typeof(cards) != []) {
+  if (!cards || typeof cards != []) {
     cards = [
       { id: "1", image: img1, isActive: true, isLiked: false },
       { id: "2", image: img2, isActive: false, isLiked: false },
@@ -52,7 +63,7 @@ const getCards = async () => {
       { id: "16", image: img16, isActive: true, isLiked: false },
       { id: "17", image: img17, isActive: false, isLiked: false },
       { id: "18", image: img18, isActive: false, isLiked: false }
-    ]
+    ];
   }
   let lastItemPosition = false;
   cards.forEach((card, i) => {
@@ -149,30 +160,22 @@ export default class Swaper extends React.Component {
       return { id, isLiked };
     });
     const response = await addUserAnswers(AppConfig.loggedUID, answers);
-    console.log('Answers sent');
+    console.log("Answers sent");
     this.props.navigation.navigate("Home");
   }
 
   renderEmptyState = () => {
     return (
-      <View style={{ height: "100%", width: "100%", display: "flex", flexDirection: 'column', justifyContent: 'center',}}>
-        <Button
-          title='Send Answers'
-          activeOpacity={1}
-          underlayColor='transparent'
-          onPress={this._submitAnswersPressed.bind(this)}
-          loadingProps={{ size: "small", color: "white" }}
-          buttonStyle={{
-            height: 50,
-            width: 250,
-            backgroundColor: "gray",
-            borderWidth: 2,
-            borderColor: "white",
-            borderRadius: 30
-          }}
-          containerStyle={{ marginVertical: 10, alignItems: 'center' }}
-          titleStyle={{ fontWeight: "bold", color: "white" }}
-        />
+      <View
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center"
+        }}
+      >
+        <SubmitAnswers navigation={ this.props.navigation }/>
       </View>
     );
   };
@@ -184,15 +187,23 @@ export default class Swaper extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.cardArea}>{this.renderCards(this.state.cards)}</View>
+        <View style={styles.cardArea}>
+          {this.renderCards(this.state.cards)}
+        </View>
         {this.isLoading ? null : this.state.isLastIndex ? (
           this.renderEmptyState()
         ) : (
           <View style={styles.btnContainer}>
-            <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.handleLikeSelect()}
+            >
               <Image source={checkIcon} style={styles.btnIcon} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={() => this.handleNopeSelect()}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.handleNopeSelect()}
+            >
               <Image source={cancelIcon} style={styles.btnIcon} />
             </TouchableOpacity>
           </View>

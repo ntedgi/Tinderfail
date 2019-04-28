@@ -34,7 +34,6 @@ const createUser = async (email, password) => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .catch(error => {
-      // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       if (errorCode == "auth/weak-password") {
@@ -42,7 +41,7 @@ const createUser = async (email, password) => {
       } else {
         alert(errorMessage);
       }
-      console.log(error);
+      return "ERROR"
     });
 };
 
