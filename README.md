@@ -1,2 +1,2 @@
 # Tinderfail
-![Screenshot](1.gif|width=404|highet=500)
+![Screenshot](1.gif=404x500)
